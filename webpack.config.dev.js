@@ -5,10 +5,13 @@ const CopyPlugin = require('copy-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const Dotenv = require('dotenv-webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
 
 module.exports = {
     entry: './src/index.js',
     mode: 'development',
+    devtool: 'source-map', // Habilita los sourcemaps
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: '[name].[contenthash].js',
@@ -30,7 +33,8 @@ module.exports = {
                 test: /\.m?js$/,
                 exclude: /node_modules/,
                 use: {
-                    loader: 'babel-loader'
+                    loader: 'babel-loader',
+                    options: { sourceMap: true },
                 }
             },
             {
@@ -74,6 +78,10 @@ module.exports = {
             ]
         }),
         new Dotenv(),
+        new BundleAnalyzerPlugin({
+            analyzerMode: 'static', // Genera un archivo HTML estático para el análisis
+            openAnalyzer: true, // Abre automáticamente el reporte en el navegador
+        }),
     ],
     devServer: {
     static: {
