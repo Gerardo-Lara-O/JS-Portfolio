@@ -75,4 +75,13 @@ module.exports = {
         }),
         new Dotenv(),
     ],
+    devServer: {
+    static: {
+        directory: path.join(__dirname, 'dist'), // Carpeta de los archivos estáticos
+    },
+    compress: true, // Habilita la compresión gzip
+    historyApiFallback: true, // Soporte para SPAs
+    port: 3006, // Puerto del servidor
+    open: true, // Abre el navegador automáticamente al iniciar el servidor
+}
 }
